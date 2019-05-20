@@ -55,7 +55,13 @@ public class Tab1Fragment extends Fragment implements IObservable {
 
                             @Override
                             public void onDismiss(ListViewAdapter view, int position) {
-                                customAdapter.remove(position);
+                                try {
+                                    customAdapter.remove(position);
+                                    updateObserver();
+                                } catch (Exception e) {
+                                    System.out.println("Error " + e.getMessage());
+                                    Toast.makeText(getActivity(), "Erro ao tentar atualizar Observers.", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         });
 
@@ -67,7 +73,7 @@ public class Tab1Fragment extends Fragment implements IObservable {
                 if (touchListener.existPendingDismisses()) {
                     touchListener.undoPendingDismiss();
                 } else {
-                    Toast.makeText(getActivity(), "Position " + position, Toast.LENGTH_SHORT).show();
+                    System.out.println("Position " + position);
                 }
             }
         });
@@ -78,12 +84,17 @@ public class Tab1Fragment extends Fragment implements IObservable {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Model model = new Model();
-                model.setName(txtName.getText().toString());
-                Repository.addModel(model);
-                customAdapter.update();
-                txtName.setText("");
-                updateObserver();
+                try {
+                    Model model = new Model();
+                    model.setName(txtName.getText().toString());
+                    Repository.addModel(model);
+                    customAdapter.update();
+                    txtName.setText("");
+                    updateObserver();
+                } catch (Exception e) {
+                    System.out.println("Error " + e.getMessage());
+                    Toast.makeText(getActivity(), "Erro ao tentar atualizar Observers.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

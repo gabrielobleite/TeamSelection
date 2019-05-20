@@ -96,6 +96,8 @@ public class Repository {
             modelArrayList.get(position).setImage_drawable(imageCheck);
         else
             modelArrayList.get(position).setImage_drawable(0);
+
+        SaveList();
     }
 
     public static void selectRandom(int numSelect)
@@ -120,5 +122,7 @@ public class Repository {
             }
             model.setImage_drawable(imageSelected);
         }
+
+        SaveList();
     }
 }

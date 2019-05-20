@@ -43,10 +43,15 @@ public class Tab2Fragment extends Fragment implements IObservable {
         lstview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Repository.toggle(position);
-                customAdapter.update();
-                updateObserver();
-                Toast.makeText(getActivity(), "Position " + position, Toast.LENGTH_SHORT).show();
+                try {
+                    Repository.toggle(position);
+                    customAdapter.update();
+                    updateObserver();
+                    System.out.println("Position " + position);
+                } catch (Exception e) {
+                    System.out.println("Error " + e.getMessage());
+                    Toast.makeText(getActivity(), "Erro ao tentar atualizar Observers.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -56,9 +61,25 @@ public class Tab2Fragment extends Fragment implements IObservable {
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Repository.selectRandom(Integer.parseInt(txtQtd.getText().toString()));
-                customAdapter.update();
-                updateObserver();
+                String qtd = txtQtd.getText().toString();
+                if(qtd.matches("\\d+(?:\\.\\d+)?")) {
+                    try {
+                        System.out.println("Matches");
+                        Repository.selectRandom(Integer.parseInt(qtd));
+                        customAdapter.update();
+                        updateObserver();
+                    } catch (Exception e) {
+                        // This will catch any exception, because they are all descended from Exception
+                        System.out.println("Error " + e.getMessage());
+                        Toast.makeText(getActivity(), "Erro ao tentar sortear.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else
+                {
+                    System.out.println("No Match");
+                    Toast.makeText(getActivity(), "Selecione o número de jogadores.", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 
 public class CustomAdapter extends BaseAdapter {
@@ -21,14 +23,22 @@ public class CustomAdapter extends BaseAdapter {
     }
 
     public void remove(int position) {
-        Repository.removeModel(ModelArrayList.get(position));
-        ModelArrayList = Repository.getModelArrayList();
-        notifyDataSetChanged();
+        try {
+            Repository.removeModel(ModelArrayList.get(position));
+            ModelArrayList = Repository.getModelArrayList();
+            notifyDataSetChanged();
+        } catch (Exception e) {
+            Toast.makeText(context, "Erro ao tentar atualizar a Grid.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void update(){
-        ModelArrayList = Repository.getModelArrayList();
-        notifyDataSetChanged();
+        try {
+            ModelArrayList = Repository.getModelArrayList();
+            notifyDataSetChanged();
+        } catch (Exception e) {
+            Toast.makeText(context, "Erro ao tentar atualizar a Grid.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

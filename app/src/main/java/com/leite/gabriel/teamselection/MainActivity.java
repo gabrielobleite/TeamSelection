@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
         tab2.addObserver(tab1);
 
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(tab1, "TAB1");
-        adapter.addFragment(tab2, "TAB2");
+        adapter.addFragment(tab1, "Jogadores");
+        adapter.addFragment(tab2, "Times");
         adapter.addFragment(tab3, "TAB3");
         viewPager.setAdapter(adapter);
     }
