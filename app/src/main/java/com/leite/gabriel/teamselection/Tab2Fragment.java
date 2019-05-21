@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hudomju.swipe.SwipeToDismissTouchListener;
@@ -27,6 +28,7 @@ public class Tab2Fragment extends Fragment implements IObservable {
 
     private Button btnAdd;
     private EditText txtQtd;
+    private TextView lblTot;
 
     private ListView lstview;
     private CustomAdapter customAdapter;
@@ -47,6 +49,8 @@ public class Tab2Fragment extends Fragment implements IObservable {
                     Repository.toggle(position);
                     customAdapter.update();
                     updateObserver();
+                    int total = Repository.getNumSelected();
+                    lblTot.setText(" / " + Integer.toString(total));
                     System.out.println("Position " + position);
                 } catch (Exception e) {
                     System.out.println("Error " + e.getMessage());
@@ -56,7 +60,11 @@ public class Tab2Fragment extends Fragment implements IObservable {
         });
 
         txtQtd = view.findViewById(R.id.txtQtd);
+        lblTot = view.findViewById(R.id.lblTot);
         btnAdd = view.findViewById(R.id.btnSortear);
+
+        int total = Repository.getNumSelected();
+        lblTot.setText(" / " + Integer.toString(total));
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override

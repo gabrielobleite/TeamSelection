@@ -47,8 +47,10 @@ public class CustomAdapter extends BaseAdapter {
     }
     @Override
     public int getItemViewType(int position) {
-
-        return position;
+        if (position < getViewTypeCount())
+            return position;
+        else
+            return getViewTypeCount() - 1;
     }
 
     @Override
@@ -68,27 +70,31 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        try {
+            ViewHolder holder;
 
-        if (convertView == null) {
-            holder = new ViewHolder();
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.listitem, null, true);
+            if (convertView == null) {
+                holder = new ViewHolder();
+                LayoutInflater inflater = (LayoutInflater) context
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.listitem, null, true);
 
-            holder.lblName = convertView.findViewById(R.id.lblName);
-            holder.imgCheck = convertView.findViewById(R.id.imgCheck);
+                holder.lblName = convertView.findViewById(R.id.lblName);
+                holder.imgCheck = convertView.findViewById(R.id.imgCheck);
 
-            convertView.setTag(holder);
-        }else {
-            // the getTag returns the viewHolder object set as a tag to the view
-            holder = (ViewHolder)convertView.getTag();
+                convertView.setTag(holder);
+            } else {
+                // the getTag returns the viewHolder object set as a tag to the view
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            holder.lblName.setText(Integer.toString(position+1) + " - " + ModelArrayList.get(position).getName());
+            holder.imgCheck.setImageResource(ModelArrayList.get(position).getImage_drawable());
+
+            return convertView;
+        } catch (Exception e) {
+            return convertView;
         }
-
-        holder.lblName.setText(ModelArrayList.get(position).getName());
-        holder.imgCheck.setImageResource(ModelArrayList.get(position).getImage_drawable());
-
-        return convertView;
     }
 
     private class ViewHolder {

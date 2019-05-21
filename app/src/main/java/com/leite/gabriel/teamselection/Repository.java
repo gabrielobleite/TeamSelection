@@ -48,41 +48,59 @@ public class Repository {
     }
 
     public static ArrayList<Model> getModelArrayList() {
-        if(modelArrayList == null) GetList();
-        if(modelArrayList.size() == 0) {
-            Model md = new Model();
-            md.setName("Lista Vazia");
-            modelArrayList.add(md);
+        try {
+            if (modelArrayList == null) GetList();
+            if (modelArrayList.size() == 0) {
+                Model md = new Model();
+                md.setName("Lista Vazia");
+                modelArrayList.add(md);
+            }
+        } catch (Exception e){
+            System.out.println("Repository Error: " + e.getMessage());
         }
         return modelArrayList;
     }
 
     public static Model getModel(int position) {
-        getModelArrayList();
-        return modelArrayList.get(position);
+        Model retorno = new Model();
+        try {
+            getModelArrayList();
+            retorno = modelArrayList.get(position);
+        } catch (Exception e){
+            System.out.println("Repository Error: " + e.getMessage());
+        }
+        return retorno;
     }
 
     public static void addModel(Model modelItem) {
-        getModelArrayList();
-        if(modelArrayList.size() == 1)
-            if(modelArrayList.get(0).getName().equals("Lista Vazia"))
-                modelArrayList.remove(0);
-        modelArrayList.add(modelItem);
+        try {
+            getModelArrayList();
+            if(modelArrayList.size() == 1)
+                if(modelArrayList.get(0).getName().equals("Lista Vazia"))
+                    modelArrayList.remove(0);
+            modelArrayList.add(modelItem);
 
-        SaveList();
+            SaveList();
+        } catch (Exception e){
+            System.out.println("Repository Error: " + e.getMessage());
+        }
     }
 
     public static void removeModel(Model modelItem) {
-        getModelArrayList();
-        modelArrayList.remove(modelItem);
-        if(modelArrayList.size() == 0)
-        {
-            Model md = new Model();
-            md.setName("Lista Vazia");
-            modelArrayList.add(md);
-        }
+        try {
+            getModelArrayList();
+            modelArrayList.remove(modelItem);
+            if(modelArrayList.size() == 0)
+            {
+                Model md = new Model();
+                md.setName("Lista Vazia");
+                modelArrayList.add(md);
+            }
 
-        SaveList();
+            SaveList();
+        } catch (Exception e){
+            System.out.println("Repository Error: " + e.getMessage());
+        }
     }
 
     public static void toggle(int position) {
@@ -124,5 +142,16 @@ public class Repository {
         }
 
         SaveList();
+    }
+
+    public static int getNumSelected()
+    {
+        int totalCheck = 0;
+
+        for(int i = 0; i < modelArrayList.size(); i++)
+            if(modelArrayList.get(i).getImage_drawable() != 0)
+                totalCheck++;
+
+        return totalCheck;
     }
 }
