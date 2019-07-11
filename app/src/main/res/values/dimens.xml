@@ -6,6 +6,7 @@
     <dimen name="appbar_padding_top">2dp</dimen>
     <dimen name="list_item_padding_sides">16dp</dimen>
     <dimen name="list_item_height">80dp</dimen>
+    <dimen name="item_height">60dp</dimen>
     <color name="gray_background">#757575</color>
     <color name="yellow">#FFBB33</color>
 </resources>
